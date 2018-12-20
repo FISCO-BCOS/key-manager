@@ -20,6 +20,7 @@
  * @date: 2018-12-04
  */
 #include "KeyCenter.h"
+#include "Hash.h"
 #include <signal.h>
 #include <unistd.h>
 #include <boost/property_tree/ini_parser.hpp>
@@ -118,11 +119,12 @@ std::string KeyCenter::encryptDataKey(const std::string& _dataKey)
 std::string KeyCenter::encryptWithCipherKey(
     const std::string& _data, const std::string& _cipherDataKey)
 {
-    bytes enData = fromHex(_cipherDataKey);
-    bytes dataKey = aesCBCDecrypt(ref(enData), ref(m_superKey));
+    bytes cipherDataKeyBytes = fromHex(_cipherDataKey);
+    bytes readableDataKeyBytes = aesCBCDecrypt(ref(cipherDataKeyBytes), ref(m_superKey));
+    bytes realDataKey = sha3(ref(readableDataKeyBytes));
 
     bytes dataBytes = bytesConstRef{(unsigned char*)_data.c_str(), _data.length()}.toBytes();
-    bytes encData = aesCBCEncrypt(ref(dataBytes), ref(dataKey));
+    bytes encData = aesCBCEncrypt(ref(dataBytes), ref(realDataKey));
     return toHex(encData);
 }
 
@@ -146,13 +148,17 @@ int main(int argc, char* argv[])
         boost::property_tree::read_ini(path, pt);
 
         port = pt.get<int>("keycenter.port", 31443);
-        superKey = readableKeyBytes(pt.get<std::string>("keycenter.superkey", ""));
 
-        if (superKey.empty())
+        string superKeyStr = pt.get<std::string>("keycenter.superkey", "");
+
+        if (superKeyStr.empty())
         {
             KCLOG(ERROR) << "Superkey is empty" << endl;
             throw;
         }
+
+        // uniform/compress key to a fixed size bytes of size 32
+        superKey = sha3(superKeyStr);
     }
     catch (std::exception& e)
     {
