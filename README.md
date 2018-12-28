@@ -24,7 +24,7 @@ git clone https://github.com/FISCO-BCOS/keycenter.git
 
 ``` shell
 cd keycenter
-make build
+mkdir build
 cd build
 cmake3 .. # Notice: There are ".." behind. 
 make
