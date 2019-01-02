@@ -25,6 +25,7 @@
 #include "libutils/Exceptions.h"
 #include <jsonrpccpp/server.h>
 #include <jsonrpccpp/server/connectors/httpserver.h>
+#include <iostream>
 #include <memory>
 #include <string>
 

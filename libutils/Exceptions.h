@@ -23,23 +23,15 @@
 
 #pragma once
 
-#include <boost/exception/diagnostic_information.hpp>
-#include <boost/exception/errinfo_api_function.hpp>
-#include <boost/exception/exception.hpp>
-#include <boost/exception/info.hpp>
-#include <boost/exception/info_tuple.hpp>
-#include <boost/throw_exception.hpp>
-#include <boost/tuple/tuple.hpp>
 #include <exception>
 #include <string>
 
 namespace dev
 {
-using errinfo_comment = boost::error_info<struct tag_comment, std::string>;
 /**
  * @brief : Base class for all exceptions
  */
-struct Exception : virtual std::exception, virtual boost::exception
+struct Exception : virtual std::exception
 {
     Exception(std::string _message = std::string()) : m_message(std::move(_message)) {}
     const char* what() const noexcept override

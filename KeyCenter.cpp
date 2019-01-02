@@ -23,8 +23,6 @@
 #include "libutils/Crypto.h"
 #include <signal.h>
 #include <unistd.h>
-#include <boost/property_tree/ini_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <exception>
 #include <iostream>
 
@@ -121,7 +119,7 @@ std::string KeyCenter::encryptWithCipherKey(
 {
     bytes cipherDataKeyBytes = fromHex(_cipherDataKey);
     bytes readableDataKeyBytes = aesCBCDecrypt(ref(cipherDataKeyBytes), ref(m_superKey));
-    bytes realDataKey = sha3(ref(readableDataKeyBytes));
+    bytes realDataKey = uniformKey(ref(readableDataKeyBytes));
 
     bytes dataBytes = bytesConstRef{(unsigned char*)_data.c_str(), _data.length()}.toBytes();
     bytes encData = aesCBCEncrypt(ref(dataBytes), ref(realDataKey));
@@ -130,26 +128,20 @@ std::string KeyCenter::encryptWithCipherKey(
 
 int main(int argc, char* argv[])
 {
-    if (argc != 2)
+    if (argc != 3)
     {
-        cout << "Usage: ./keycenter <config file>" << endl;
-        cout << "Eg:    ./keycenter kcconfig.ini" << endl;
+        cout << "Usage: ./keycenter <port> <superkey>" << endl;
+        cout << "Eg:    ./keycenter 31443 123xyz" << endl;
         return 0;
     }
-
-    string path(argv[1]);
 
     // Parse config
     int port;
     bytes superKey;
     try
     {
-        boost::property_tree::ptree pt;
-        boost::property_tree::read_ini(path, pt);
-
-        port = pt.get<int>("keycenter.port", 31443);
-
-        string superKeyStr = pt.get<std::string>("keycenter.superkey", "");
+        port = atoi(argv[1]);
+        string superKeyStr = argv[2];
 
         if (superKeyStr.empty())
         {
@@ -157,12 +149,12 @@ int main(int argc, char* argv[])
             throw;
         }
 
-        // uniform/compress key to a fixed size bytes of size 32
-        superKey = sha3(superKeyStr);
+        // uniform/compress key to a fixed size bytes of size 32/128
+        superKey = uniformKey(bytesConstRef(superKeyStr));
     }
     catch (std::exception& e)
     {
-        KCLOG(ERROR) << "Parse configure file " << path << " failed for: " << e.what() << endl;
+        KCLOG(ERROR) << "Configure params error for: " << e.what() << endl;
         return 0;
     }
 

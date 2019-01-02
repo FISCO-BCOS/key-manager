@@ -32,20 +32,6 @@ namespace dev
 bytes const NullBytes;
 std::string const EmptyString;
 
-void InvariantChecker::checkInvariants(
-    HasInvariants const* _this, char const* _fn, char const* _file, int _line, bool _pre)
-{
-    if (!_this->invariants())
-    {
-        ::boost::exception_detail::throw_exception_(FailedInvariant(), _fn, _file, _line);
-    }
-}
-
-TimerHelper::~TimerHelper()
-{
-    auto e = std::chrono::high_resolution_clock::now() - m_t;
-}
-
 /// get utc time(ms)
 uint64_t utcTime()
 {

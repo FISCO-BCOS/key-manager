@@ -126,110 +126,6 @@ inline bytes asBytes(std::string const& _b)
 bytes asNibbles(bytesConstRef const& _s);
 
 
-// Big-endian to/from host endian conversion functions.
-
-/// Converts a templated integer value to the big-endian byte-stream represented on a templated
-/// collection. The size of the collection object will be unchanged. If it is too small, it will not
-/// represent the value properly, if too big then the additional elements will be zeroed out.
-/// @a Out will typically be either std::string or bytes.
-/// @a T will typically by unsigned, u160, u256 or bigint.
-template <class T, class Out>
-inline void toBigEndian(T _val, Out& o_out)
-{
-    static_assert(std::is_same<bigint, T>::value || !std::numeric_limits<T>::is_signed,
-        "only unsigned types or bigint supported");  // bigint does not carry sign bit on shift
-    for (auto i = o_out.size(); i != 0; _val >>= 8, i--)
-    {
-        T v = _val & (T)0xff;
-        o_out[i - 1] = (typename Out::value_type)(uint8_t)v;
-    }
-}
-
-/// Converts a big-endian byte-stream represented on a templated collection to a templated integer
-/// value.
-/// @a _In will typically be either std::string or bytes.
-/// @a T will typically by unsigned, u160, u256 or bigint.
-template <class T, class _In>
-inline T fromBigEndian(_In const& _bytes)
-{
-    T ret = (T)0;
-    for (auto i : _bytes)
-        ret = (T)((ret << 8) | (byte)(typename std::make_unsigned<decltype(i)>::type)i);
-    return ret;
-}
-
-/// Convenience functions for toBigEndian
-inline std::string toBigEndianString(u256 _val)
-{
-    std::string ret(32, '\0');
-    toBigEndian(_val, ret);
-    return ret;
-}
-inline std::string toBigEndianString(u160 _val)
-{
-    std::string ret(20, '\0');
-    toBigEndian(_val, ret);
-    return ret;
-}
-inline bytes toBigEndian(u256 _val)
-{
-    bytes ret(32);
-    toBigEndian(_val, ret);
-    return ret;
-}
-inline bytes toBigEndian(u160 _val)
-{
-    bytes ret(20);
-    toBigEndian(_val, ret);
-    return ret;
-}
-
-/// Convenience function for toBigEndian.
-/// @returns a byte array just big enough to represent @a _val.
-template <class T>
-inline bytes toCompactBigEndian(T _val, unsigned _min = 0)
-{
-    static_assert(std::is_same<bigint, T>::value || !std::numeric_limits<T>::is_signed,
-        "only unsigned types or bigint supported");  // bigint does not carry sign bit on shift
-    int i = 0;
-    for (T v = _val; v; ++i, v >>= 8)
-    {
-    }
-    bytes ret(std::max<unsigned>(_min, i), 0);
-    toBigEndian(_val, ret);
-    return ret;
-}
-inline bytes toCompactBigEndian(byte _val, unsigned _min = 0)
-{
-    return (_min || _val) ? bytes{_val} : bytes{};
-}
-
-/// Convenience function for toBigEndian.
-/// @returns a string just big enough to represent @a _val.
-template <class T>
-inline std::string toCompactBigEndianString(T _val, unsigned _min = 0)
-{
-    static_assert(std::is_same<bigint, T>::value || !std::numeric_limits<T>::is_signed,
-        "only unsigned types or bigint supported");  // bigint does not carry sign bit on shift
-    int i = 0;
-    for (T v = _val; v; ++i, v >>= 8)
-    {
-    }
-    std::string ret(std::max<unsigned>(_min, i), '\0');
-    toBigEndian(_val, ret);
-    return ret;
-}
-
-inline std::string toCompactHex(u256 _val, unsigned _min = 0)
-{
-    return toHex(toCompactBigEndian(_val, _min));
-}
-
-inline std::string toCompactHexPrefixed(u256 _val, unsigned _min = 0)
-{
-    return toHexPrefixed(toCompactBigEndian(_val, _min));
-}
-
 // Algorithms for string and string-like collections.
 
 /// Escapes a string into the C-string representation.
@@ -247,19 +143,6 @@ unsigned commonPrefix(T const& _t, _U const& _u)
         if (i == s || _t[i] != _u[i])
             return i;
     return s;
-}
-
-/// Determine bytes required to encode the given integer value. @returns 0 if @a _i is zero.
-template <class T>
-inline unsigned bytesRequired(T _i)
-{
-    static_assert(std::is_same<bigint, T>::value || !std::numeric_limits<T>::is_signed,
-        "only unsigned types or bigint supported");  // bigint does not carry sign bit on shift
-    unsigned i = 0;
-    for (; _i != 0; ++i, _i >>= 8)
-    {
-    }
-    return i;
 }
 
 /// Trims a given number of elements from the front of a collection.

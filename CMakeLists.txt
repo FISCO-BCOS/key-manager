@@ -36,7 +36,6 @@ include(ProjectMHD)
 include(ProjectCryptopp)
 include(ProjectJsonCpp)
 include(ProjectJsonRpcCpp)
-include(ProjectBoost)
 include(ProjectTASSL)
 
 # 并将名称保存到 DIR_SRCS 变量
@@ -47,7 +46,6 @@ include_directories(${MHD_INCLUDE_DIR})
 include_directories(${JSONCPP_INCLUDE_DIR})
 include_directories(${JSONRPCCPP_INCLUDE_DIR})
 include_directories(${CURL_INCLUDE_DIR})
-include_directories(${BOOST_INCLUDE_DIR})
 
 add_subdirectory(libutils)
 
@@ -60,5 +58,5 @@ message(${MHD_INCLUDE_DIR})
 set(EXE_NAME "keycenter")
 add_executable(${EXE_NAME} ${DIR_SRCS})
 # 添加链接库
-target_link_libraries(${EXE_NAME} utils Cryptopp stdc++ JsonRpcCpp::Server JsonRpcCpp::Client JsonRpcCpp::Common Boost::Filesystem Boost::Thread)
+target_link_libraries(${EXE_NAME} utils Cryptopp stdc++ JsonRpcCpp::Server JsonRpcCpp::Client JsonRpcCpp::Common)
 target_link_libraries(${EXE_NAME} procps)
