@@ -19,8 +19,7 @@
  * @date 2014
  */
 
-#include "AES.h"
-#include "Exceptions.h"
+#include "Crypto.h"
 #include <cryptopp/aes.h>
 #include <cryptopp/filters.h>
 #include <cryptopp/modes.h>
@@ -68,7 +67,7 @@ bytes dev::aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key)
 bytes dev::aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key)
 {
     bytes ivData = _key.cropped(0, 16).toBytes();
-    //bytesConstRef ivData = _key.cropped(0, 16);
+    // bytesConstRef ivData = _key.cropped(0, 16);
     // LOG(DEBUG)<<"AES DE TYPE....................";
     string decryptedData;
     CryptoPP::AES::Decryption aesDecryption(_key.data(), _key.size());
@@ -81,10 +80,8 @@ bytes dev::aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key)
     return asBytes(decryptedData);
 }
 
-bytes dev::readableKeyBytes(const std::string& _readableKey)
+bytes dev::uniformKey(cosnt std::strng& _readableKey)
 {
-    if (_readableKey.length() != 32)
-        BOOST_THROW_EXCEPTION(AESKeyLengthError() << errinfo_comment("Key must has 32 characters"));
-
-    return bytesConstRef{(unsigned char*)_readableKey.c_str(), _readableKey.length()}.toBytes();
+    // uniform/compress key to a fixed size bytes of size 32
+    return sha3(_readableKey);
 }

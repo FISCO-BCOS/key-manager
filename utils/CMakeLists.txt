@@ -1,0 +1,12 @@
+file(GLOB_RECURSE HEADERS "*.h")
+file(GLOB SRC_LIST "./*.cpp")
+if (BUILD_GM)
+    file(GLOB_RECURSE SRC_LIST "gm/*.cpp") 
+else ()
+    file(GLOB SRC_LIST "origin/*.cpp")
+endif()
+
+add_library(utils ${SRC_LIST} ${HEADERS})
+eth_use(utils OPTIONAL OpenSSL)
+target_link_libraries(utils devcore Secp256k1 Cryptopp dl)
+target_include_directories(utils PUBLIC ${BOOST_INCLUDE_DIR})

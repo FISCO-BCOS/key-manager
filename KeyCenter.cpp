@@ -20,7 +20,7 @@
  * @date: 2018-12-04
  */
 #include "KeyCenter.h"
-#include "Hash.h"
+#include "utils/Crypto.h"
 #include <signal.h>
 #include <unistd.h>
 #include <boost/property_tree/ini_parser.hpp>

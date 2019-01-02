@@ -19,7 +19,7 @@
  * @date 2014
  */
 
-#include "Hash.h"
+#include "Crypto.h"
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
