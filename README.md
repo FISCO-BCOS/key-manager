@@ -24,33 +24,18 @@ git clone https://github.com/FISCO-BCOS/keycenter.git
 
 ``` shell
 cd keycenter
-make build
+mkdir build
 cd build
 cmake3 .. # Notice: There are ".." behind. 
+# cmake3 .. -DBUILD_GM=On  #When building "guomi" keycenter
 make
 #The execution: "keycenter" generated.
-```
-
-### Configure
-
-Configure port and superkey
-
-``` shell
-vim kcconfig.ini
-```
-
-like
-
-``` ini
-[keycenter]
-port=31443
-superkey=01234567012345670123456701234564
 ```
 
 ### Start
 
 ``` shell
-./keycenter kcconfig.ini
+./keycenter 31443 123xyz # keycenter <port> <superkey>
 ```
 
 ### Check
