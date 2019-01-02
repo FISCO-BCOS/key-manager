@@ -19,8 +19,8 @@
  * @date 2018
  */
 
-#include "utils/Crypto.h"
-#include "utils/gm/sm3/sm3.h"
+#include "../Crypto.h"
+#include "sm3/sm3.h"
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>

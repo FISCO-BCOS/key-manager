@@ -19,7 +19,7 @@
  * @date 2014
  */
 
-#include "Crypto.h"
+#include "../Crypto.h"
 #include <cryptopp/aes.h>
 #include <cryptopp/filters.h>
 #include <cryptopp/modes.h>
@@ -80,8 +80,8 @@ bytes dev::aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key)
     return asBytes(decryptedData);
 }
 
-bytes dev::uniformKey(cosnt std::strng& _readableKey)
+bytes dev::uniformKey(bytesConstRef _readableKeyBytes)
 {
     // uniform/compress key to a fixed size bytes of size 32
-    return sha3(_readableKey);
+    return sha3(_readableKeyBytes);
 }

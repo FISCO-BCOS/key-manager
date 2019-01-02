@@ -50,5 +50,5 @@ inline bytes sha3(std::string const& _input)
 
 bytes aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key);
 bytes aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key);
-bytes uniformKey(cosnt std::strng& _readableKey);
+bytes uniformKey(bytesConstRef _readableKeyBytes);
 }  // namespace dev

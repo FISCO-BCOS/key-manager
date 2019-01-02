@@ -19,14 +19,12 @@
  * @date 2018
  */
 
-#include "utils/Crypto.h"
-#include "utils/gm/sm4/sm4.h"
-#include <libdevcore/easylog.h>
+#include "../Crypto.h"
+#include "sm4/sm4.h"
 #include <stdlib.h>
 #include <string.h>
 
 using namespace dev;
-using namespace dev::crypto;
 using namespace std;
 
 
@@ -60,9 +58,9 @@ bytes dev::aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key)
     return deData;
 }
 
-bytes dev::uniformKey(cosnt std::strng& _readableKey)
+bytes dev::uniformKey(bytesConstRef _readableKeyBytes)
 {
     // uniform/compress key to a fixed size bytes of size 128
-    bytes oneTurn = sha3(_readableKey);
+    bytes oneTurn = sha3(_readableKeyBytes);
     return oneTurn + oneTurn + oneTurn + oneTurn;  // 4 * 32 = 128 bits
 }
