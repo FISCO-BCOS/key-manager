@@ -23,11 +23,11 @@ check_file()
 }
 
 set -e
-[ ! -n "$3" ] && LOG_WARN "Usage: sh $0 <URL 127.0.0.1:31443> <file> <cipherdatakey>" && exit;
+[ ! -n "$4" ] && LOG_WARN "Usage: sh $0 <IP 127.0.0.1> <port 31443> <file> <cipherdatakey>" && exit;
 
-URL=$1
-ORIGIN_FILE=$2
-CIPHER_KEY=$3
+URL=$1:$2
+ORIGIN_FILE=$3
+CIPHER_KEY=$4
 BACKUP_FILE=$ORIGIN_FILE.bak.$(date +%s)
 
 check_file $ORIGIN_FILE
