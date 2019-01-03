@@ -29,7 +29,7 @@
 #include <memory>
 #include <string>
 
-#define KCLOG(_OBV) std::cout << "[" << dev::utcTime() << "] [" #_OBV "] "
+#define KCLOG(_OBV) std::cout << "[" << dev::utcTime() << "][" #_OBV "]"
 
 class BaseServer : public jsonrpc::AbstractServer<BaseServer>
 {

@@ -46,8 +46,8 @@
 
 // BCOS log format
 #define LOG_BADGE(_NAME) "[" << _NAME << "]"
-#define LOG_DESC(_DESCRIPTION) _DESCRIPTION << " "
-#define LOG_KV(_K, _V) _K << "=" << _V << ","
+#define LOG_DESC(_DESCRIPTION) _DESCRIPTION
+#define LOG_KV(_K, _V) "," << _K << "=" << _V
 
 // CryptoPP defines byte in the global namespace, so must we.
 using byte = uint8_t;
