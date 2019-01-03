@@ -33,7 +33,8 @@ using namespace jsonrpc;
 // method
 void BaseServer::decDataKey(const Json::Value& request, Json::Value& response)
 {
-    KCLOG(TRACE) << "[Dec] Receive: " << endl << request.toStyledString() << endl;
+    KCLOG(TRACE) << LOG_BADGE("Dec") << LOG_DESC("Receive") << endl
+                 << request.toStyledString() << endl;
     Json::Value res;
     try
     {
@@ -48,12 +49,14 @@ void BaseServer::decDataKey(const Json::Value& request, Json::Value& response)
         res["info"] = string(e.what());
     }
     response = res;
-    KCLOG(TRACE) << "[Dec] Respond: " << endl << response.toStyledString() << endl;
+    KCLOG(TRACE) << LOG_BADGE("Dec") << LOG_DESC("Respond") << endl
+                 << response.toStyledString() << endl;
 }
 
 void BaseServer::encDataKey(const Json::Value& request, Json::Value& response)
 {
-    KCLOG(TRACE) << "[Enc] Receive: " << endl << request.toStyledString() << endl;
+    KCLOG(TRACE) << LOG_BADGE("Enc") << LOG_DESC("Receive") << endl
+                 << request.toStyledString() << endl;
     Json::Value res;
     try
     {
@@ -68,12 +71,14 @@ void BaseServer::encDataKey(const Json::Value& request, Json::Value& response)
         res["info"] = string(e.what());
     }
     response = res;
-    KCLOG(TRACE) << "[Enc] Respond: " << endl << response.toStyledString() << endl;
+    KCLOG(TRACE) << LOG_BADGE("Enc") << LOG_DESC("Respond") << endl
+                 << response.toStyledString() << endl;
 }
 
 void BaseServer::encWithCipherKey(const Json::Value& request, Json::Value& response)
 {
-    KCLOG(TRACE) << "[EncWithKey] Receive: " << endl << request.toStyledString() << endl;
+    KCLOG(TRACE) << LOG_BADGE("EncWithKey") << LOG_DESC("Receive") << endl
+                 << request.toStyledString() << endl;
     Json::Value res;
     try
     {
@@ -88,7 +93,8 @@ void BaseServer::encWithCipherKey(const Json::Value& request, Json::Value& respo
         res["info"] = string(e.what());
     }
     response = res;
-    KCLOG(TRACE) << "[EncWithKey] Respond: " << endl << response.toStyledString() << endl;
+    KCLOG(TRACE) << LOG_BADGE("EncWithKey") << LOG_DESC("Respond") << endl
+                 << response.toStyledString() << endl;
 }
 
 static bool should_exit = false;
@@ -145,7 +151,7 @@ int main(int argc, char* argv[])
 
         if (superKeyStr.empty())
         {
-            KCLOG(ERROR) << "Superkey is empty" << endl;
+            KCLOG(ERROR) << LOG_BADGE("Load") << LOG_DESC("Superkey is empty") << endl;
             throw;
         }
 
@@ -154,7 +160,8 @@ int main(int argc, char* argv[])
     }
     catch (std::exception& e)
     {
-        KCLOG(ERROR) << "Configure params error for: " << e.what() << endl;
+        KCLOG(ERROR) << LOG_BADGE("Load") << LOG_DESC("Configure params error")
+                     << LOG_KV("reason", e.what()) << endl;
         return 0;
     }
 
@@ -171,18 +178,20 @@ int main(int argc, char* argv[])
             signal(SIGTERM, &exit_handler);
             signal(SIGINT, &exit_handler);
 
-            KCLOG(TRACE) << "keycenter stared. Port: " << port << endl;
+            KCLOG(TRACE) << LOG_BADGE("Load") << LOG_DESC("keycenter stared")
+                         << LOG_KV("port", port) << endl;
             while (!should_exit)
                 sleep(1);
         }
         else
         {
-            KCLOG(ERROR) << "Start Server failed" << endl;
+            KCLOG(ERROR) << LOG_BADGE("Load") << LOG_DESC("Start Server failed") << endl;
         }
     }
     catch (jsonrpc::JsonRpcException& e)
     {
-        KCLOG(ERROR) << e.what() << endl;
+        KCLOG(ERROR) << LOG_BADGE("Load") << LOG_DESC("Start Server exception")
+                     << LOG_KV("reason", e.what()) << endl;
     }
 
     return 0;
