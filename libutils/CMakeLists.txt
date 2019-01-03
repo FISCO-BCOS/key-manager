@@ -11,6 +11,9 @@ list(APPEND SRC_LIST ${SUB_SRC_LIST})
 
 add_library(utils ${SRC_LIST} ${HEADERS})
 
-target_link_libraries(utils TASSL Cryptopp dl)
+target_link_libraries(utils Cryptopp dl)
 
+if (BUILD_GM)
+target_link_libraries(utils TASSL)
 target_include_directories(utils PUBLIC ${TASSL_INCLUDE_DIRS})
+endif()
