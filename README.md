@@ -20,6 +20,15 @@ Each node has their own ``` dataKey``` and use ``` dataKey``` to communicate wit
 git clone https://github.com/FISCO-BCOS/keycenter.git
 ```
 
+### Install package
+
+Only in ubuntu, install
+
+``` shell
+# only in ubuntu
+sudo apt-get install libprocps-dev
+```
+
 ### Build
 
 ``` shell
