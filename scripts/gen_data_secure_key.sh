@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 LOG_WARN()
 {
     local content=${1}
