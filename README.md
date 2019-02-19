@@ -22,10 +22,12 @@ git clone https://github.com/FISCO-BCOS/keycenter.git
 
 ### Install package
 
-Only in ubuntu, install
+Install
 
 ``` shell
-# only in ubuntu
+# In Centos
+sudo yum install procps-ng-devel
+# In ubuntu
 sudo apt-get install libprocps-dev
 ```
 
