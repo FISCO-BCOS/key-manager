@@ -19,7 +19,7 @@
  * @author: jimmyshi
  * @date: 2018-12-04
  */
-#include "KeyCenter.h"
+#include "KeyManager.h"
 #include "libutils/Crypto.h"
 #include <signal.h>
 #include <unistd.h>
@@ -103,14 +103,14 @@ static void exit_handler(int sig)
     should_exit = true;
 }
 
-std::string KeyCenter::decryptDataKeyHex(const std::string& _cipherDataKey)
+std::string KeyManager::decryptDataKeyHex(const std::string& _cipherDataKey)
 {
     bytes enData = fromHex(_cipherDataKey);
     bytes deData = aesCBCDecrypt(ref(enData), ref(m_superKey));
     return toHex(deData);
 }
 
-std::string KeyCenter::encryptDataKey(const std::string& _dataKey)
+std::string KeyManager::encryptDataKey(const std::string& _dataKey)
 {
     bytes dataKeyBtyes =
         bytesConstRef{(unsigned char*)_dataKey.c_str(), _dataKey.length()}.toBytes();
@@ -120,7 +120,7 @@ std::string KeyCenter::encryptDataKey(const std::string& _dataKey)
 }
 
 
-std::string KeyCenter::encryptWithCipherKey(
+std::string KeyManager::encryptWithCipherKey(
     const std::string& _data, const std::string& _cipherDataKey)
 {
     bytes cipherDataKeyBytes = fromHex(_cipherDataKey);
@@ -169,7 +169,7 @@ int main(int argc, char* argv[])
     try
     {
         HttpServer connector(port);
-        KeyCenter keyManager(connector, superKey);
+        KeyManager keyManager(connector, superKey);
 
         if (keyManager.StartListening())
         {

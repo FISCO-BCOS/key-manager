@@ -77,13 +77,13 @@ public:
     }
 };
 
-class KeyCenter : public BaseServer
+class KeyManager : public BaseServer
 {
 public:
-    KeyCenter(jsonrpc::HttpServer& _connector, const dev::bytes& _superKey)
+    KeyManager(jsonrpc::HttpServer& _connector, const dev::bytes& _superKey)
       : BaseServer(_connector), m_superKey(_superKey){};
 
-    ~KeyCenter()
+    ~KeyManager()
     {
         this->StopListening();
         KCLOG(TRACE) << "key-manager exit." << std::endl;
