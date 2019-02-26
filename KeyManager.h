@@ -15,7 +15,7 @@
  * (c) 2016-2018 fisco-dev contributors.
  */
 /**
- * @brief : keycenter server
+ * @brief : key-manager server
  * @author: jimmyshi
  * @date: 2018-12-04
  */
@@ -86,7 +86,7 @@ public:
     ~KeyCenter()
     {
         this->StopListening();
-        KCLOG(TRACE) << "keycenter exit." << std::endl;
+        KCLOG(TRACE) << "key-manager exit." << std::endl;
     }
 
     virtual std::string decryptDataKeyHex(const std::string& _cipherDataKey) override;

@@ -15,7 +15,7 @@
  * (c) 2016-2018 fisco-dev contributors.
  */
 /**
- * @brief : keycenter server
+ * @brief : key-manager server
  * @author: jimmyshi
  * @date: 2018-12-04
  */
@@ -136,8 +136,8 @@ int main(int argc, char* argv[])
 {
     if (argc != 3)
     {
-        cout << "Usage: ./keycenter <port> <superkey>" << endl;
-        cout << "Eg:    ./keycenter 31443 123xyz" << endl;
+        cout << "Usage: ./key-manager <port> <superkey>" << endl;
+        cout << "Eg:    ./key-manager 31443 123xyz" << endl;
         return 0;
     }
 
@@ -165,20 +165,20 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    // Start keycenter
+    // Start key-manager
     try
     {
         HttpServer connector(port);
-        KeyCenter keycenter(connector, superKey);
+        KeyCenter keyManager(connector, superKey);
 
-        if (keycenter.StartListening())
+        if (keyManager.StartListening())
         {
             // register exit_handler signal
             signal(SIGABRT, &exit_handler);
             signal(SIGTERM, &exit_handler);
             signal(SIGINT, &exit_handler);
 
-            KCLOG(TRACE) << LOG_BADGE("Load") << LOG_DESC("keycenter stared")
+            KCLOG(TRACE) << LOG_BADGE("Load") << LOG_DESC("key-manager stared")
                          << LOG_KV("port", port) << endl;
             while (!should_exit)
                 sleep(1);

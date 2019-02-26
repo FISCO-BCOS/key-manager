@@ -23,7 +23,7 @@ cmake_minimum_required(VERSION 3.4)
 set(CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake" CACHE PATH "The path to the cmake directory")
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_DIR})
 
-project(KeyCenter VERSION "2.0")
+project(KeyManager VERSION "2.0")
 
 add_compile_options(-std=c++11)
 set(CMAKE_CXX_FLAGS "-pthread")
@@ -55,7 +55,7 @@ message(${CURL_INCLUDE_DIR})
 message(${MHD_INCLUDE_DIR})
 
 # 指定生成目标
-set(EXE_NAME "keycenter")
+set(EXE_NAME "key-manager")
 add_executable(${EXE_NAME} ${DIR_SRCS})
 # 添加链接库
 target_link_libraries(${EXE_NAME} utils Cryptopp stdc++ JsonRpcCpp::Server JsonRpcCpp::Client JsonRpcCpp::Common)
