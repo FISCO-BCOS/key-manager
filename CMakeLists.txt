@@ -38,7 +38,6 @@ include(ProjectJsonCpp)
 include(ProjectJsonRpcCpp)
 include(ProjectTASSL)
 
-# 并将名称保存到 DIR_SRCS 变量
 aux_source_directory(. DIR_SRCS)
 
 include_directories(libutils)
@@ -54,9 +53,8 @@ message(${JSONCPP_INCLUDE_DIR})
 message(${CURL_INCLUDE_DIR})
 message(${MHD_INCLUDE_DIR})
 
-# 指定生成目标
 set(EXE_NAME "key-manager")
 add_executable(${EXE_NAME} ${DIR_SRCS})
-# 添加链接库
+
 target_link_libraries(${EXE_NAME} utils Cryptopp stdc++ JsonRpcCpp::Server JsonRpcCpp::Client JsonRpcCpp::Common)
 target_link_libraries(${EXE_NAME} procps)
