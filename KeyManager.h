@@ -15,7 +15,7 @@
  * (c) 2016-2018 fisco-dev contributors.
  */
 /**
- * @brief : keycenter server
+ * @brief : key-manager server
  * @author: jimmyshi
  * @date: 2018-12-04
  */
@@ -77,16 +77,16 @@ public:
     }
 };
 
-class KeyCenter : public BaseServer
+class KeyManager : public BaseServer
 {
 public:
-    KeyCenter(jsonrpc::HttpServer& _connector, const dev::bytes& _superKey)
+    KeyManager(jsonrpc::HttpServer& _connector, const dev::bytes& _superKey)
       : BaseServer(_connector), m_superKey(_superKey){};
 
-    ~KeyCenter()
+    ~KeyManager()
     {
         this->StopListening();
-        KCLOG(TRACE) << "keycenter exit." << std::endl;
+        KCLOG(TRACE) << "key-manager exit." << std::endl;
     }
 
     virtual std::string decryptDataKeyHex(const std::string& _cipherDataKey) override;

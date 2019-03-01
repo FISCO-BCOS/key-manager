@@ -15,11 +15,11 @@
  * (c) 2016-2018 fisco-dev contributors.
  */
 /**
- * @brief : keycenter server
+ * @brief : key-manager server
  * @author: jimmyshi
  * @date: 2018-12-04
  */
-#include "KeyCenter.h"
+#include "KeyManager.h"
 #include "libutils/Crypto.h"
 #include <signal.h>
 #include <unistd.h>
@@ -103,14 +103,14 @@ static void exit_handler(int sig)
     should_exit = true;
 }
 
-std::string KeyCenter::decryptDataKeyHex(const std::string& _cipherDataKey)
+std::string KeyManager::decryptDataKeyHex(const std::string& _cipherDataKey)
 {
     bytes enData = fromHex(_cipherDataKey);
     bytes deData = aesCBCDecrypt(ref(enData), ref(m_superKey));
     return toHex(deData);
 }
 
-std::string KeyCenter::encryptDataKey(const std::string& _dataKey)
+std::string KeyManager::encryptDataKey(const std::string& _dataKey)
 {
     bytes dataKeyBtyes =
         bytesConstRef{(unsigned char*)_dataKey.c_str(), _dataKey.length()}.toBytes();
@@ -120,7 +120,7 @@ std::string KeyCenter::encryptDataKey(const std::string& _dataKey)
 }
 
 
-std::string KeyCenter::encryptWithCipherKey(
+std::string KeyManager::encryptWithCipherKey(
     const std::string& _data, const std::string& _cipherDataKey)
 {
     bytes cipherDataKeyBytes = fromHex(_cipherDataKey);
@@ -136,8 +136,8 @@ int main(int argc, char* argv[])
 {
     if (argc != 3)
     {
-        cout << "Usage: ./keycenter <port> <superkey>" << endl;
-        cout << "Eg:    ./keycenter 31443 123xyz" << endl;
+        cout << "Usage: ./key-manager <port> <superkey>" << endl;
+        cout << "Eg:    ./key-manager 31443 123xyz" << endl;
         return 0;
     }
 
@@ -165,20 +165,20 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    // Start keycenter
+    // Start key-manager
     try
     {
         HttpServer connector(port);
-        KeyCenter keycenter(connector, superKey);
+        KeyManager keyManager(connector, superKey);
 
-        if (keycenter.StartListening())
+        if (keyManager.StartListening())
         {
             // register exit_handler signal
             signal(SIGABRT, &exit_handler);
             signal(SIGTERM, &exit_handler);
             signal(SIGINT, &exit_handler);
 
-            KCLOG(TRACE) << LOG_BADGE("Load") << LOG_DESC("keycenter stared")
+            KCLOG(TRACE) << LOG_BADGE("Load") << LOG_DESC("key-manager stared")
                          << LOG_KV("port", port) << endl;
             while (!should_exit)
                 sleep(1);

@@ -1,23 +1,23 @@
-# Key Center
+# Key Manager
 
 Manage keys for FISCO BCOS.
 
 ## Description
 
-In FISCO BCOS consortium chain framework, each organization has their own key center. Organization use key center to manage their keys. Key center is deployed in organization's internal network.  
+In FISCO BCOS consortium chain framework, each organization has their own key manager. Organization use key manager to manage their keys. Key manager is deployed in organization's internal network.  
 
-In **disk encryption**. This shows how key center manages data key for nodes. 
+In **disk encryption**. This shows how key manager manages data key for nodes. 
 
 ![](docs/imgs/framework.png)
 
-Each node has their own ``` dataKey``` and use ``` dataKey``` to communicate with its encrypted space. Node does not manage its ``` dataKey```. It only has its ``` cipherDataKey```. ``` cipherDatakey``` is the cipher of ``` datakey ```encrypted by ``` superKey```.  When node is booting, it sends ``` cipherDataKey``` to key center, and key center decrypts the ``` cipherDataKey```  using ``` superKey ``` and return ``` dataKey``` to node. Node manage ``` dataKey``` in memory and drop it after shutting down.
+Each node has their own ``` dataKey``` and use ``` dataKey``` to communicate with its encrypted space. Node does not manage its ``` dataKey```. It only has its ``` cipherDataKey```. ``` cipherDatakey``` is the cipher of ``` datakey ```encrypted by ``` superKey```.  When node is booting, it sends ``` cipherDataKey``` to key manager, and key manager decrypts the ``` cipherDataKey```  using ``` superKey ``` and return ``` dataKey``` to node. Node manage ``` dataKey``` in memory and drop it after shutting down.
 
 ## How to use
 
 ### Clone
 
 ``` shell
-git clone https://github.com/FISCO-BCOS/keycenter.git
+git clone https://github.com/FISCO-BCOS/key-manager.git
 ```
 
 ### Install package
@@ -34,19 +34,19 @@ sudo apt-get install libprocps-dev
 ### Build
 
 ``` shell
-cd keycenter
+cd key-manager
 mkdir build
 cd build
 cmake3 .. # Notice: There are ".." behind. 
-# cmake3 .. -DBUILD_GM=On  #When building "guomi" keycenter
+# cmake3 .. -DBUILD_GM=On  #When building "guomi" key-manager
 make
-#The execution: "keycenter" generated.
+#The execution: "key-manager" generated.
 ```
 
 ### Start
 
 ``` shell
-./keycenter 31443 123xyz # keycenter <port> <superkey>
+./key-manager 31443 123xyz # key-manager <port> <superkey>
 ```
 
 ### Check
@@ -54,11 +54,11 @@ make
 Print info when successfully started.
 
 ``` log
-[1545471609499] [TRACE] keycenter stared. Port: 31443
+[1545471609499] [TRACE] key-manager stared. Port: 31443
 ```
 
 ## License
 
-![](https://img.shields.io/github/license/FISCO-BCOS/keycenter.svg)
+![](https://img.shields.io/github/license/FISCO-BCOS/key-manager.svg)
 
 All contributions are made under the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html). See [LICENSE](LICENSE).

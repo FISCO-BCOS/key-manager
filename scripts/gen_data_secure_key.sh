@@ -20,6 +20,6 @@ echo "CiherDataKey generated: $cypherDataKey"
 LOG_INFO "Append these into config.ini to enable disk encryption:"
 echo "[data_secure]
 enable=true
-keycenter_ip=$1
-keycenter_port=$2
+key_manager_ip=$1
+key_manager_port=$2
 cipher_data_key=$cypherDataKey"
