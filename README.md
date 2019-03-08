@@ -37,8 +37,15 @@ sudo apt-get install libprocps-dev
 cd key-manager
 mkdir build
 cd build
+
+# For Centos
 cmake3 .. # Notice: There are ".." behind. 
 # cmake3 .. -DBUILD_GM=On  #When building "guomi" key-manager
+
+# For ubuntu
+cmake .. # Notice: There are ".." behind. 
+# cmake .. -DBUILD_GM=On  #When building "guomi" key-manager
+
 make
 #The execution: "key-manager" generated.
 ```
