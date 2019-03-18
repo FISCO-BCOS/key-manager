@@ -4,7 +4,8 @@ Manage keys for FISCO BCOS.
 
 ## Description
 
-In FISCO BCOS consortium chain framework, each organization has their own key manager. Organization use key manager to manage their keys. Key manager is deployed in organization's internal network.  
+In FISCO BCOS consortium chain framework, each organization has their own key manager. Organization use key manager to manage their keys. Key manager is deployed in organization's internal network. **The version only supports** [FISCO BCOS 2.0](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/introduction.html).
+
 
 In **disk encryption**. This shows how key manager manages data key for nodes. 
 
