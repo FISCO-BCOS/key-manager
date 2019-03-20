@@ -1,6 +1,6 @@
 # Key Manager
 
-Manage data encryption keys for FISCO BCOS nodes.
+Manage data encryption keys for FISCO BCOS nodes.**The version only supports** [FISCO BCOS 2.0](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.0/docs/introduction.html).
 
 ## Description
 
