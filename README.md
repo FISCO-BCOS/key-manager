@@ -52,7 +52,7 @@ make
 
 ### Start
 
-```shell
+``` shell
 ./key-manager 31443 123xyz # key-manager <port> <superkeyString>
 ```
 
