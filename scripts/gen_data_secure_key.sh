@@ -18,7 +18,7 @@ cypherDataKey=$(curl -X POST --data '{"jsonrpc":"2.0","method":"encDataKey","par
 [ -z "$cypherDataKey" ] && echo "Generate failed." && exit;
 echo "CiherDataKey generated: $cypherDataKey"
 LOG_INFO "Append these into config.ini to enable disk encryption:"
-echo "[data_secure]
+echo "[storage_security]
 enable=true
 key_manager_ip=$1
 key_manager_port=$2
