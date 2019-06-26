@@ -50,6 +50,8 @@ make
 #The execution: "key-manager" generated.
 ```
 
+Note：Use ``` -DBUILD_GM=On ``` to build guomi Key Manager if needed.
+
 ### Start
 
 ``` shell
