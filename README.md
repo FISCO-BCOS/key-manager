@@ -29,6 +29,8 @@ Install
 sudo yum install procps-ng-devel
 # In ubuntu
 sudo apt-get install libprocps-dev
+# In ArchLinux
+sudo pacman -S procps-ng
 ```
 
 ### Build
