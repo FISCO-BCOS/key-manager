@@ -178,7 +178,7 @@ int main(int argc, char* argv[])
             signal(SIGTERM, &exit_handler);
             signal(SIGINT, &exit_handler);
 
-            KCLOG(TRACE) << LOG_BADGE("Load") << LOG_DESC("key-manager stared")
+            KCLOG(TRACE) << LOG_BADGE("Load") << LOG_DESC("key-manager started")
                          << LOG_KV("port", port) << endl;
             while (!should_exit)
                 sleep(1);
