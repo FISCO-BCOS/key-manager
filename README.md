@@ -57,7 +57,7 @@ Note：Use ``` -DBUILD_GM=On ``` to build guomi Key Manager if needed.
 Print info when successfully started.
 
 ```log
-[1545471609499] [TRACE] key-manager stared. Port: 31443
+[1545471609499] [TRACE] key-manager started. Port: 31443
 ```
 
 ### In disk encryption
