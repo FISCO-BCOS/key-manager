@@ -22,7 +22,7 @@ Each node has their own ``` dataKey``` and use ``` dataKey``` to communicate wit
 ```shell
 # In Centos
 sudo yum install procps-ng-devel
-yum install curl-devel
+sudo yum install curl-devel
 # In ubuntu
 sudo apt-get install libprocps-dev
 ```
