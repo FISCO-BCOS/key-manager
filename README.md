@@ -52,7 +52,7 @@ Note：Use ``` -DBUILD_GM=On ``` to build guomi Key Manager if needed.
 ### Start
 
 ``` shell
-./key-manager 31443 123xyz # key-manager <port> <superkeyString>
+./key-manager 8150 123xyz # key-manager <port> <superkeyString>
 ```
 
 ### Check
@@ -60,7 +60,7 @@ Note：Use ``` -DBUILD_GM=On ``` to build guomi Key Manager if needed.
 Print info when successfully started.
 
 ```log
-[1545471609499] [TRACE][Load]key-manager started,port=31443
+[1545471609499] [TRACE][Load]key-manager started,port=8150
 ```
 
 ### In disk encryption

@@ -23,7 +23,7 @@ check_file()
 }
 
 set -e
-[ ! -n "$4" ] && LOG_WARN "Usage: sh $0 <IP 127.0.0.1> <port 31443> <file> <cipherdatakey>" && exit;
+[ ! -n "$4" ] && LOG_WARN "Usage: sh $0 <IP 127.0.0.1> <port 8150> <file> <cipherdatakey>" && exit;
 
 URL=$1:$2
 ORIGIN_FILE=$3
