@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
     if (argc != 3)
     {
         cout << "Usage: ./key-manager <port> <superkey>" << endl;
-        cout << "Eg:    ./key-manager 31443 123xyz" << endl;
+        cout << "Eg:    ./key-manager 8150 123xyz" << endl;
         return 0;
     }
 
@@ -198,4 +198,4 @@ int main(int argc, char* argv[])
 }
 
 // curl -X POST --data '{"jsonrpc":"2.0","method":"getDataKey","params":["name"],"id":83}'
-// http://127.0.0.1:31443 |jq
+// http://127.0.0.1:8150 |jq

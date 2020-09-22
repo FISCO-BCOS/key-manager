@@ -12,7 +12,7 @@ LOG_INFO()
 }
 
 set -e
-[ ! -n "$3" ] && LOG_WARN "Usage: sh $0 <IP 127.0.0.1> <port 31443> <datakey>" && exit;
+[ ! -n "$3" ] && LOG_WARN "Usage: sh $0 <IP 127.0.0.1> <port 8150> <datakey>" && exit;
 
 cypherDataKey=$(curl -X POST --data '{"jsonrpc":"2.0","method":"encDataKey","params":["'$3'"],"id":83}' $1:$2 |jq .result.dataKey  |sed 's/\"//g')
 [ -z "$cypherDataKey" ] && echo "Generate failed." && exit;
