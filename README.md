@@ -16,17 +16,6 @@ In [**disk encryption**](https://fisco-bcos-documentation.readthedocs.io/zh_CN/l
 Each node has their own ``` dataKey``` and use ``` dataKey``` to communicate with its encrypted space. A node does not manage its ``` dataKey```. It only has its ``` cipherDataKey```. ``` cipherDatakey``` is the ciphertext of ``` datakey ```encrypted by ``` superKey```.  When the node is booting, it sends ``` cipherDataKey``` to key manager, and key manager decrypts the ``` cipherDataKey```  using ``` superKey ``` and return ``` dataKey``` to the node. The node stores ``` dataKey``` in memory and drop it after the node is shut down.
 
 ## How to use
-
-### Install dependency package
-
-```shell
-# In Centos
-sudo yum install procps-ng-devel
-sudo yum install curl-devel
-# In ubuntu
-sudo apt-get install libprocps-dev
-```
-
 ### Build
 
 ```shell
