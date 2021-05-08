@@ -24,7 +24,7 @@ Each node has their own ``` dataKey``` and use ``` dataKey``` to communicate wit
 sudo yum install procps-ng-devel
 sudo yum install curl-devel
 # In ubuntu
-sudo apt-get install libprocps-dev
+sudo apt-get install libprocps-dev curl libcurl4-openssl-dev
 # In ArchLinux
 sudo pacman -S procps-ng
 ```
