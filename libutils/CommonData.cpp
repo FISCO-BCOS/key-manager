@@ -21,6 +21,7 @@
 
 #include "CommonData.h"
 #include <random>
+#include <array>
 
 #include "Exceptions.h"
 

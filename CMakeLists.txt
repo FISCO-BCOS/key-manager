@@ -57,4 +57,3 @@ set(EXE_NAME "key-manager")
 add_executable(${EXE_NAME} ${DIR_SRCS})
 
 target_link_libraries(${EXE_NAME} utils Cryptopp stdc++ JsonRpcCpp::Server JsonRpcCpp::Client JsonRpcCpp::Common)
-target_link_libraries(${EXE_NAME} procps)
