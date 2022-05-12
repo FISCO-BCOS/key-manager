@@ -21,9 +21,8 @@
  */
 #pragma once
 #include "libutils/Common.h"
+#include "libutils/Crypto.h"
 #include "libutils/Exceptions.h"
-#include "libutils/gm/GmCrypto.h"
-#include "libutils/origin/OriginCrypto.h"
 #include <jsonrpccpp/server.h>
 #include <jsonrpccpp/server/connectors/httpserver.h>
 #include <iostream>

@@ -20,7 +20,8 @@
  * @date: 2018-12-04
  */
 #include "KeyManager.h"
-#include "libutils/Crypto.h"
+#include "libutils/gm/GmCrypto.h"
+#include "libutils/origin/OriginCrypto.h"
 #include <signal.h>
 #include <string.h>
 #include <unistd.h>
