@@ -21,8 +21,9 @@
  */
 #pragma once
 #include "libutils/Common.h"
-#include "libutils/Crypto.h"
 #include "libutils/Exceptions.h"
+#include "libutils/gm/GmCrypto.h"
+#include "libutils/origin/OriginCrypto.h"
 #include <jsonrpccpp/server.h>
 #include <jsonrpccpp/server/connectors/httpserver.h>
 #include <iostream>
@@ -80,8 +81,10 @@ public:
 class KeyManager : public BaseServer
 {
 public:
-    KeyManager(jsonrpc::HttpServer& _connector, const dev::bytes& _superKey)
-      : BaseServer(_connector), m_superKey(_superKey){};
+    KeyManager(
+        jsonrpc::HttpServer& _connector, const dev::bytes& _superKey, dev::Crypto::Ptr _crypto)
+      : BaseServer(_connector), m_superKey(_superKey), m_crypto(_crypto)
+    {}
 
     ~KeyManager()
     {
@@ -96,4 +99,5 @@ public:
 
 private:
     dev::bytes m_superKey;
+    dev::Crypto::Ptr m_crypto;
 };

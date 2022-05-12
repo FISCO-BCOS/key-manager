@@ -14,37 +14,38 @@
  * along with FISCO-BCOS.  If not, see <http://www.gnu.org/licenses/>
  * (c) 2016-2018 fisco-dev contributors.
  */
-/**
- * @brief : key-manager server
- * @author: jimmyshi
- * @date: 2018-12-04
+/** @file GmHash.h
+ *  @author chuwen
+ * @date 2022-05-12
  */
 
 #pragma once
 
-#include "Common.h"
-#include "CommonData.h"
-#include "vector_ref.h"
-#include <memory>
-#include <string>
+#include "../Common.h"
 
 namespace dev
 {
-// SHA-3 convenience routines.
 
-class Crypto
+class GmHash
 {
 public:
-    using Ptr = std::shared_ptr<Crypto>;
+    GmHash() = default;
+    ~GmHash() = default;
 
 public:
-    Crypto() = default;
-    virtual ~Crypto() = default;
+    /// Calculate SHA3-256 hash of the given input and load it into the given output.
+    /// @returns false if o_output.size() != 32.
+    bool sha3(bytesConstRef _input, bytesRef o_output);
 
-public:
-    virtual bytes aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key) = 0;
-    virtual bytes aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key) = 0;
-    virtual bytes uniformKey(bytesConstRef _readableKeyBytes) = 0;
+    /// Calculate SHA3-256 hash of the given input, returning as a 256-bit hash.
+    inline bytes sha3(bytesConstRef _input)
+    {
+        bytes ret(32, 0);
+        sha3(_input, ref(ret));
+        return ret;
+    }
+
+    inline bytes sha3(std::string const& _input) { return sha3(bytesConstRef(_input)); }
 };
 
 }  // namespace dev

@@ -14,37 +14,33 @@
  * along with FISCO-BCOS.  If not, see <http://www.gnu.org/licenses/>
  * (c) 2016-2018 fisco-dev contributors.
  */
-/**
- * @brief : key-manager server
- * @author: jimmyshi
- * @date: 2018-12-04
+/** @file GmAES.h
+ * @author chuwen
+ * @date 2022-05-12
  */
 
 #pragma once
 
-#include "Common.h"
-#include "CommonData.h"
-#include "vector_ref.h"
-#include <memory>
-#include <string>
+#include "../Common.h"
+#include "GmHash.h"
 
 namespace dev
 {
-// SHA-3 convenience routines.
 
-class Crypto
+class GmAES
 {
 public:
-    using Ptr = std::shared_ptr<Crypto>;
+    GmAES() = default;
+    ~GmAES() = default;
 
 public:
-    Crypto() = default;
-    virtual ~Crypto() = default;
+    bytes aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key);
+    bytes aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key);
 
-public:
-    virtual bytes aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key) = 0;
-    virtual bytes aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key) = 0;
-    virtual bytes uniformKey(bytesConstRef _readableKeyBytes) = 0;
+    bytes uniformKey(bytesConstRef _readableKeyBytes);
+
+private:
+    GmHash m_gmHash;
 };
 
 }  // namespace dev
