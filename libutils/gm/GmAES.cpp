@@ -19,7 +19,8 @@
  * @date 2018
  */
 
-#include "../Crypto.h"
+#include "GmAES.h"
+#include "CommonData.h"
 #include "sm4/sm4.h"
 #include <stdlib.h>
 #include <string.h>
@@ -28,7 +29,7 @@ using namespace dev;
 using namespace std;
 
 
-bytes dev::aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key)
+bytes dev::GmAES::aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key)
 {
     bytesConstRef ivData = _key.cropped(0, 16);
     int padding = _plainData.size() % 16;
@@ -45,7 +46,8 @@ bytes dev::aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key)
     // LOG(DEBUG)<<"ivData:"<<ascii2hex((const char*)ivData.data(),ivData.size());
     return enData;
 }
-bytes dev::aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key)
+
+bytes dev::GmAES::aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key)
 {
     bytesConstRef ivData = _key.cropped(0, 16);
     bytes deData(_cypherData.size());
@@ -58,9 +60,9 @@ bytes dev::aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key)
     return deData;
 }
 
-bytes dev::uniformKey(bytesConstRef _readableKeyBytes)
+bytes dev::GmAES::uniformKey(bytesConstRef _readableKeyBytes)
 {
     // uniform/compress key to a fixed size bytes of size 128
-    bytes oneTurn = sha3(_readableKeyBytes);
+    bytes oneTurn = m_gmHash.sha3(_readableKeyBytes);
     return oneTurn + oneTurn + oneTurn + oneTurn;  // 4 * 32 = 128 bits
 }

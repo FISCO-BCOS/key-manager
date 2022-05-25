@@ -80,8 +80,10 @@ public:
 class KeyManager : public BaseServer
 {
 public:
-    KeyManager(jsonrpc::HttpServer& _connector, const dev::bytes& _superKey)
-      : BaseServer(_connector), m_superKey(_superKey){};
+    KeyManager(
+        jsonrpc::HttpServer& _connector, const dev::bytes& _superKey, dev::Crypto::Ptr _crypto)
+      : BaseServer(_connector), m_superKey(_superKey), m_crypto(_crypto)
+    {}
 
     ~KeyManager()
     {
@@ -96,4 +98,5 @@ public:
 
 private:
     dev::bytes m_superKey;
+    dev::Crypto::Ptr m_crypto;
 };

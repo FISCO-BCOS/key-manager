@@ -14,37 +14,33 @@
  * along with FISCO-BCOS.  If not, see <http://www.gnu.org/licenses/>
  * (c) 2016-2018 fisco-dev contributors.
  */
-/**
- * @brief : key-manager server
- * @author: jimmyshi
- * @date: 2018-12-04
+/** @file AES.h
+ * @author chuwen
+ * @date 2022-05-12
  */
 
 #pragma once
 
-#include "Common.h"
-#include "CommonData.h"
-#include "vector_ref.h"
-#include <memory>
-#include <string>
+#include "../Common.h"
+#include "SHA3.h"
 
 namespace dev
 {
-// SHA-3 convenience routines.
 
-class Crypto
+class AES
 {
 public:
-    using Ptr = std::shared_ptr<Crypto>;
+    AES() = default;
+    ~AES() = default;
 
 public:
-    Crypto() = default;
-    virtual ~Crypto() = default;
+    bytes aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key);
+    bytes aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key);
 
-public:
-    virtual bytes aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key) = 0;
-    virtual bytes aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key) = 0;
-    virtual bytes uniformKey(bytesConstRef _readableKeyBytes) = 0;
+    bytes uniformKey(bytesConstRef _readableKeyBytes);
+
+private:
+    SHA3 m_sha3;
 };
 
 }  // namespace dev
