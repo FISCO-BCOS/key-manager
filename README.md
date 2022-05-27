@@ -47,12 +47,11 @@ make
 #The execution: "key-manager" generated.
 ```
 
-Note：Use ``` -DBUILD_GM=On ``` to build guomi Key Manager if needed.
-
 ### Start
 
 ``` shell
 ./key-manager 8150 123xyz # key-manager <port> <superkeyString>
+./key-manager 8150 123xyz -g # key-manager <port> <superkeyString> <guomi version>
 ```
 
 ### Check
