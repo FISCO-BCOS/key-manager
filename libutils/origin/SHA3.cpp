@@ -19,7 +19,7 @@
  * @date 2014
  */
 
-#include "../Crypto.h"
+#include "SHA3.h"
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
@@ -174,7 +174,7 @@ defshake(128) defshake(256)
 
 }  // namespace keccak
 
-bool sha3(bytesConstRef _input, bytesRef o_output)
+bool SHA3::sha3(bytesConstRef _input, bytesRef o_output)
 {
     // FIXME: What with unaligned memory?
     if (o_output.size() != 32)

@@ -20,8 +20,10 @@
  * @date: 2018-12-04
  */
 #include "KeyManager.h"
-#include "libutils/Crypto.h"
+#include "libutils/gm/GmCrypto.h"
+#include "libutils/origin/OriginCrypto.h"
 #include <signal.h>
+#include <string.h>
 #include <unistd.h>
 #include <exception>
 #include <iostream>
@@ -106,7 +108,7 @@ static void exit_handler(int sig)
 std::string KeyManager::decryptDataKeyHex(const std::string& _cipherDataKey)
 {
     bytes enData = fromHex(_cipherDataKey);
-    bytes deData = aesCBCDecrypt(ref(enData), ref(m_superKey));
+    bytes deData = m_crypto->aesCBCDecrypt(ref(enData), ref(m_superKey));
     return toHex(deData);
 }
 
@@ -115,7 +117,7 @@ std::string KeyManager::encryptDataKey(const std::string& _dataKey)
     bytes dataKeyBtyes =
         bytesConstRef{(unsigned char*)_dataKey.c_str(), _dataKey.length()}.toBytes();
 
-    bytes deData = aesCBCEncrypt(ref(dataKeyBtyes), ref(m_superKey));
+    bytes deData = m_crypto->aesCBCEncrypt(ref(dataKeyBtyes), ref(m_superKey));
     return toHex(deData);
 }
 
@@ -124,21 +126,38 @@ std::string KeyManager::encryptWithCipherKey(
     const std::string& _data, const std::string& _cipherDataKey)
 {
     bytes cipherDataKeyBytes = fromHex(_cipherDataKey);
-    bytes readableDataKeyBytes = aesCBCDecrypt(ref(cipherDataKeyBytes), ref(m_superKey));
-    bytes realDataKey = uniformKey(ref(readableDataKeyBytes));
+    bytes readableDataKeyBytes = m_crypto->aesCBCDecrypt(ref(cipherDataKeyBytes), ref(m_superKey));
+    bytes realDataKey = m_crypto->uniformKey(ref(readableDataKeyBytes));
 
     bytes dataBytes = bytesConstRef{(unsigned char*)_data.c_str(), _data.length()}.toBytes();
-    bytes encData = aesCBCEncrypt(ref(dataBytes), ref(realDataKey));
+    bytes encData = m_crypto->aesCBCEncrypt(ref(dataBytes), ref(realDataKey));
     return toHex(encData);
 }
 
 int main(int argc, char* argv[])
 {
-    if (argc != 3)
+    if (argc != 3 && argc != 4)
     {
-        cout << "Usage: ./key-manager <port> <superkey>" << endl;
+        cout << "Usage: ./key-manager <port> <superkey> <gm version: opt>" << endl;
         cout << "Eg:    ./key-manager 8150 123xyz" << endl;
+        cout << "Eg:    ./key-manager 8150 123xyz -g    create gm version" << endl;
         return 0;
+    }
+
+    dev::Crypto::Ptr crypto;
+    if (3 == argc)
+        crypto = std::make_shared<dev::OriginCrypto>();
+    if (4 == argc)
+    {
+        if (0 != strcmp("-g", argv[3]))
+        {
+            std::cerr
+                << "You gave four paramaters, but the fourth parameter is not recognized, exit"
+                << std::endl;
+            exit(0);
+        }
+
+        crypto = std::make_shared<dev::GmCrypto>();
     }
 
     // Parse config
@@ -156,7 +175,7 @@ int main(int argc, char* argv[])
         }
 
         // uniform/compress key to a fixed size bytes of size 32/128
-        superKey = uniformKey(bytesConstRef(superKeyStr));
+        superKey = crypto->uniformKey(bytesConstRef(superKeyStr));
     }
     catch (std::exception& e)
     {
@@ -169,7 +188,7 @@ int main(int argc, char* argv[])
     try
     {
         HttpServer connector(port);
-        KeyManager keyManager(connector, superKey);
+        KeyManager keyManager(connector, superKey, crypto);
 
         if (keyManager.StartListening())
         {

@@ -19,7 +19,8 @@
  * @date 2014
  */
 
-#include "../Crypto.h"
+#include "AES.h"
+#include "../CommonData.h"
 #include <cryptopp/aes.h>
 #include <cryptopp/filters.h>
 #include <cryptopp/modes.h>
@@ -32,6 +33,9 @@
 using namespace std;
 using namespace dev;
 using namespace CryptoPP;
+
+namespace
+{
 
 char* ascii2hex(const char* chs, int len)
 {
@@ -50,8 +54,9 @@ char* ascii2hex(const char* chs, int len)
     return ascii;
 }
 
+}  // namespace
 
-bytes dev::aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key)
+bytes dev::AES::aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key)
 {
     bytesConstRef ivData = _key.cropped(0, 16);
     string cipherData;
@@ -64,7 +69,7 @@ bytes dev::aesCBCEncrypt(bytesConstRef _plainData, bytesConstRef _key)
     return asBytes(cipherData);
 }
 
-bytes dev::aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key)
+bytes dev::AES::aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key)
 {
     bytes ivData = _key.cropped(0, 16).toBytes();
     // bytesConstRef ivData = _key.cropped(0, 16);
@@ -80,8 +85,8 @@ bytes dev::aesCBCDecrypt(bytesConstRef _cypherData, bytesConstRef _key)
     return asBytes(decryptedData);
 }
 
-bytes dev::uniformKey(bytesConstRef _readableKeyBytes)
+bytes dev::AES::uniformKey(bytesConstRef _readableKeyBytes)
 {
     // uniform/compress key to a fixed size bytes of size 32
-    return sha3(_readableKeyBytes);
+    return m_sha3.sha3(_readableKeyBytes);
 }

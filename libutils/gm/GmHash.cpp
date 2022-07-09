@@ -14,12 +14,12 @@
  * along with FISCO-BCOS.  If not, see <http://www.gnu.org/licenses/>
  * (c) 2016-2018 fisco-dev contributors.
  */
-/** @file Hash.cpp
+/** @file GmHash.cpp
  * @author Asherli
  * @date 2018
  */
 
-#include "../Crypto.h"
+#include "GmHash.h"
 #include "sm3/sm3.h"
 #include <cstdint>
 #include <cstdio>
@@ -30,7 +30,7 @@ using namespace dev;
 
 namespace dev
 {
-bool sha3(bytesConstRef _input, bytesRef o_output)
+bool GmHash::sha3(bytesConstRef _input, bytesRef o_output)
 {
     // FIXME: What with unaligned memory?
     if (o_output.size() != 32)

@@ -23,7 +23,7 @@ cmake_minimum_required(VERSION 3.4)
 set(CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake" CACHE PATH "The path to the cmake directory")
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_DIR})
 
-project(KeyManager VERSION "2.0")
+project(KeyManager VERSION "1.1.0")
 
 add_compile_options(-std=c++11)
 set(CMAKE_CXX_FLAGS "-pthread")
