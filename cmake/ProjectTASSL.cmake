@@ -1,26 +1,23 @@
 include(ExternalProject)
 include(GNUInstallDirs)
 
-if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-set(TASSL_CONFIG_COMMAND sh ./Configure darwin64-x86_64-cc)
-else()
-	set(TASSL_CONFIG_COMMAND bash config -Wl,--rpath=./ shared)
-endif ()
+set(TASSL_CONFIG_COMMAND bash config -DOPENSSL_PIC no-shared)
 
 set(TASSL_BUILD_COMMAND make)
 
 ExternalProject_Add(tassl
-	PREFIX ${CMAKE_SOURCE_DIR}/deps
-	DOWNLOAD_NO_PROGRESS 1
-	GIT_REPOSITORY https://github.com/jntass/TASSL.git
-	GIT_TAG ccdfc64c5f56988f76abc0390a12ed9865bc49e9
-	BUILD_IN_SOURCE 1
-	CONFIGURE_COMMAND ${TASSL_CONFIG_COMMAND}
-	LOG_CONFIGURE 1
-	LOG_BUILD 1
-	LOG_INSTALL 1
-	BUILD_COMMAND ${TASSL_BUILD_COMMAND}
-	INSTALL_COMMAND ""
+        PREFIX ${CMAKE_SOURCE_DIR}/deps
+        DOWNLOAD_NAME tassl_1.0.2o-5d2100b3.tar.gz
+        DOWNLOAD_NO_PROGRESS 1
+        URL https://github.com/FISCO-BCOS/TASSL/archive/5d2100b378063bc9ffce0bb703784ab6053848ce.tar.gz
+        URL_HASH SHA256=aab236c3da193192c6754dc86130bb5bb307aa2e4865fc01797a1c868c9b1971
+        BUILD_IN_SOURCE 1
+        CONFIGURE_COMMAND ${TASSL_CONFIG_COMMAND}
+        LOG_CONFIGURE 1
+        LOG_BUILD 1
+        LOG_INSTALL 1
+        BUILD_COMMAND ${TASSL_BUILD_COMMAND}
+        INSTALL_COMMAND ""
 )
 
 ExternalProject_Get_Property(tassl SOURCE_DIR)

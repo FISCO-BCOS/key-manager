@@ -32,7 +32,7 @@ BACKUP_FILE=$ORIGIN_FILE.bak.$(date +%s)
 
 check_file $ORIGIN_FILE
 
-fileStream=$(base64 $ORIGIN_FILE |tr -d "\n")
+fileStream=$(base64 -i $ORIGIN_FILE |tr -d "\n")
 #echo $fileStream
 
 curl -X POST --data '{"jsonrpc":"2.0","method":"encWithCipherKey","params":["'$fileStream'", "'$CIPHER_KEY'"],"id":83}' $URL |jq
