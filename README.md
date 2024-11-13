@@ -3,7 +3,8 @@
 # Key Manager
 
 Manage data encryption keys for FISCO BCOS nodes.
-- **The version only supports** [FISCO BCOS 2.x](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/introduction.html).
+- [FISCO BCOS 2.x](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/introduction.html).
+- [FISCO BCOS 3.x](https://fisco-bcos-doc.readthedocs.io/zh-cn/latest/docs/tutorial/air/storage_security.html#).
 
 ## Description
 
