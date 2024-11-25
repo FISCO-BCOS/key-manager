@@ -35,7 +35,7 @@ check_file $ORIGIN_FILE
 OS_TYPE=$(uname)
 if [[ "$OS_TYPE" == "Linux" ]]; then
     # Linux 系统
-    ffileStream=$(base64 $ORIGIN_FILE |tr -d "\n")
+    fileStream=$(base64 $ORIGIN_FILE |tr -d "\n")
 elif [[ "$OS_TYPE" == "Darwin" ]]; then
     # macOS 系统
     fileStream=$(base64 -i "$ORIGIN_FILE" | tr -d "\n")
